@@ -7,7 +7,7 @@ const forecast = require('./utils/forecast');
 
 const app = express();
 
-const port = process.env.port || 3000;
+const port = process.env.port;
 // set handle bar as view engine and set views path
 const viewsDirectoryPath = path.join(__dirname, '../templates/views');
 const partialsDirectoryPath = path.join(__dirname, '../templates/partials');
