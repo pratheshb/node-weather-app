@@ -14,7 +14,6 @@ const getGeoCoords = (address, callBack) => {
       const data = {
         latitude: center[1],
         longtitude: center[0],
-        location,
       };
       callBack(undefined, data);
     }

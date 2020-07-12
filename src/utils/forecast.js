@@ -22,8 +22,9 @@ const getWether = (latitude, longtitude, callBack) => {
         callBack("Unable to forecast weather", undefined);
       } else {
         const { temperature, feelslike, precip } = body.current;
-        const result = `It is currently ${temperature} degrees C out but feels like ${feelslike} degrees C . There is ${precip}% chance of rain`;
-        callBack(undefined, result);
+        const forecastData = `It is currently ${temperature} degrees C out but feels like ${feelslike} degrees C . There is ${precip}% chance of rain`;
+        const location = `${body.location.name}, ${body.location.region}, ${body.location.country}`;
+        callBack(undefined, {forecastData, location});
       }
     })
     .catch((error) => {

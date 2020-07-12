@@ -36,33 +36,48 @@ app.get('/about', (req, res) => {
 
 app.get('/weather', (req, res) => {
   if (!req.query.address) {
-    return res.send({
-      data: 'Please provide valid address to get forecast.',
-      name: 'Prathesh B'
-    });
-  }
-
-  geoCods.getGeoCoords(req.query.address, (error, {location,latitude, longtitude } = {}) => {
-    if (error) {
-      res.send( {
-        data: error,
-        location: req.query.address,
-      name: 'Prathesh B'
+    if (!req.query.latitude) {
+      return res.send({
+        data: 'Please provide valid address to get forecast.',
+        name: 'Prathesh B'
       });
-      return console.log(error);
     }
 
-    forecast.getWether(latitude, longtitude, (error, forecastData) => {
+     return forecast.getWether(req.query.latitude, req.query.longitude, (error, {forecastData, location}) => {
       if (error) {
-       console.log(error);
+        console.log(error);
       }
-      res.send( {
+      res.send({
         data: forecastData,
         location,
-      name: 'Prathesh B'
+        name: 'Prathesh B'
       });
     });
-  });
+
+  }
+
+    geoCods.getGeoCoords(req.query.address, (error, { latitude, longtitude } = {}) => {
+      if (error) {
+        res.send({
+          data: error,
+          location: req.query.address,
+          name: 'Prathesh B'
+        });
+        return console.log(error);
+      }
+
+      forecast.getWether(latitude, longtitude, (error, {forecastData, location}) => {
+        if (error) {
+          console.log(error);
+        }
+        res.send({
+          data: forecastData,
+          location,
+          name: 'Prathesh B'
+        });
+      });
+    });
+
 });
 
 
@@ -82,4 +97,4 @@ app.get('*', (req, res) => {
   });
 });
 
-app.listen(port, () => console.log('Server running in port '+ port));
+app.listen(port, () => console.log('Server running in port ' + port));
